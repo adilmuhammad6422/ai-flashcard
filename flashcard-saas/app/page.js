@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+
 import { Container, Box, Typography, AppBar, Toolbar, Button, Grid } from '@mui/material';
 import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
@@ -19,7 +20,6 @@ export default function HomePage() {
           </SignedIn>
         </Toolbar>
       </AppBar>
-
       <Container maxWidth="md">
         <Box sx={{ textAlign: 'center', my: 4 }}>
           <Typography variant="h2" component="h1" gutterBottom>
@@ -35,14 +35,12 @@ export default function HomePage() {
             Learn More
           </Button>
         </Box>
-
         <Box sx={{ my: 6 }}>
           <Typography variant="h4" component="h2" gutterBottom>Features</Typography>
           <Grid container spacing={4}>
             {/* Feature items */}
           </Grid>
         </Box>
-
         <Box sx={{ my: 6, textAlign: 'center' }}>
           <Typography variant="h4" component="h2" gutterBottom>Pricing</Typography>
           <Grid container spacing={4} justifyContent="center">
