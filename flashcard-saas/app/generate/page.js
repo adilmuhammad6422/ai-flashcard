@@ -1,18 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Container, TextField, Button, Typography, Box, Grid, Card, CardContent, CardActionArea, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
-import getStripe from '../../utils/get-stripe';
+import { Container, TextField, Button, Typography, Box, Grid, Card, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { doc, collection, getDoc, writeBatch } from 'firebase/firestore';
 import db from '../../firebase';
-import { doc, setDoc, getDoc, writeBatch, collection } from 'firebase/firestore';
-import { useUser } from '@clerk/nextjs';
 
 export default function Generate() {
   const [text, setText] = useState('');
   const [flashcards, setFlashcards] = useState([]);
   const [setName, setSetName] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
-  const { user } = useUser();
 
   const handleSubmit = async () => {
     if (!text.trim()) {
@@ -120,14 +117,11 @@ export default function Generate() {
               </Grid>
             ))}
           </Grid>
-        </Box>
-      )}
-
-      {flashcards.length > 0 && (
-        <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
-          <Button variant="contained" color="primary" onClick={handleOpenDialog}>
-            Save Flashcards
-          </Button>
+          <Box sx={{ mt: 4, display: 'flex', justifyContent: 'center' }}>
+            <Button variant="contained" color="primary" onClick={handleOpenDialog}>
+              Save Flashcards
+            </Button>
+          </Box>
         </Box>
       )}
 

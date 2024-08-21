@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Grid, Card, CardContent, CardActionArea, Typography, Box } from '@mui/material';
+'use client';
+
+import { useEffect, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
-import { collection, doc, getDocs } from 'firebase/firestore';
-import db from '../../firebase';
 import { useSearchParams } from 'next/navigation';
+import { collection, doc, getDocs } from 'firebase/firestore';
+import { Container, Grid, Card, CardActionArea, CardContent, Typography, Box } from '@mui/material';
+import db from '../../firebase';
 
 export default function Flashcard() {
-  const { user } = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const [flipped, setFlipped] = useState({});
   const searchParams = useSearchParams();
@@ -46,7 +48,12 @@ export default function Flashcard() {
                     <div>
                       <div>
                         <Typography variant="h5" component="div">
-                          {flipped[flashcard.id] ? flashcard.back : flashcard.front}
+                          {flashcard.front}
+                        </Typography>
+                      </div>
+                      <div>
+                        <Typography variant="h5" component="div">
+                          {flashcard.back}
                         </Typography>
                       </div>
                     </div>

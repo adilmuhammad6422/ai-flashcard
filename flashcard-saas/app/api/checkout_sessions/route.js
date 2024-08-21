@@ -21,7 +21,7 @@ export async function POST(req) {
             product_data: {
               name: 'Pro subscription',
             },
-            unit_amount: formatAmountForStripe(10, 'usd'),
+            unit_amount: formatAmountForStripe(10, 'usd'), // $10.00
             recurring: {
               interval: 'month',
               interval_count: 1,
@@ -36,10 +36,14 @@ export async function POST(req) {
 
     const checkoutSession = await stripe.checkout.sessions.create(params);
 
-    return NextResponse.json(checkoutSession, { status: 200 });
+    return NextResponse.json(checkoutSession, {
+      status: 200,
+    });
   } catch (error) {
     console.error('Error creating checkout session:', error);
-    return new NextResponse(JSON.stringify({ error: { message: error.message } }), { status: 500 });
+    return new NextResponse(JSON.stringify({ error: { message: error.message } }), {
+      status: 500,
+    });
   }
 }
 

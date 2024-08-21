@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Grid, Card, CardContent, CardActionArea, Typography } from '@mui/material';
-import { useUser } from '@clerk/nextjs';
-import db from '../../firebase';
-import { doc, getDoc, collection, setDoc } from 'firebase/firestore';
-import { useRouter } from 'next/router';
+'use client';
 
-export default function Flashcards() {
-  const { user } = useUser();
+import { useEffect, useState } from 'react';
+import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/router';
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { Container, Grid, Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import db from '../../firebase';
+
+export default function FlashcardsPage() {
+  const { isLoaded, isSignedIn, user } = useUser();
   const [flashcards, setFlashcards] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
     async function getFlashcards() {
       if (!user) return;
-
       const docRef = doc(collection(db, 'users'), user.id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
